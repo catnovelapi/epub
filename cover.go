@@ -3,6 +3,7 @@ package newepub
 import (
 	"github.com/bmaupin/go-epub"
 	"github.com/catnovelapi/BuilderHttpClient"
+	"github.com/catnovelapi/tools"
 	"log"
 )
 
@@ -64,7 +65,7 @@ func (c *Cover) GetEpubCoverPath() string {
 }
 
 func (c *Cover) downloadCover() *Cover {
-	if Exists(c.path) {
+	if tools.Exists(c.path) {
 		c.relativePath = c.addImage()
 	}
 	image := BuilderHttpClient.Get(c.url, BuilderHttpClient.Header(map[string]any{"User-Agent": c.header})).Byte()
@@ -72,7 +73,7 @@ func (c *Cover) downloadCover() *Cover {
 		log.Println("downloadCover error: len(image) == 0")
 		return c
 	}
-	NewOpen(c.path, "w").Write(image)
+	tools.NewOpen(c.path, "w").Write(image)
 	c.relativePath = c.addImage()
 	return c
 }

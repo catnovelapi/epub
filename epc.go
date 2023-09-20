@@ -2,6 +2,7 @@ package newepub
 
 import (
 	"fmt"
+	"github.com/catnovelapi/tools"
 	"path"
 	"strings"
 )
@@ -60,8 +61,8 @@ func WithTagName(tagNameList []string) Option {
 func WithPath(dirPath string) Option {
 	return OptionFunc(func(epub *ConfigEpub) {
 		dir := path.Join(dirPath, epub.BookName)
-		if !Exists(dir) {
-			MkdirAll(dir)
+		if !tools.Exists(dir) {
+			tools.MkdirAll(dir)
 		}
 		epub.dirPath = dirPath
 	})
@@ -77,8 +78,8 @@ func NewConfigEpub(opts ...Option) *ConfigEpub {
 
 func (epub *ConfigEpub) SetPath(dirPath string) *ConfigEpub {
 	dir := path.Join(dirPath, epub.BookName)
-	if !Exists(dir) {
-		MkdirAll(dir)
+	if !tools.Exists(dir) {
+		tools.MkdirAll(dir)
 	}
 	epub.dirPath = dirPath
 	return epub

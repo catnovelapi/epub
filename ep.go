@@ -3,6 +3,7 @@ package newepub
 import (
 	"fmt"
 	"github.com/bmaupin/go-epub"
+	"github.com/catnovelapi/tools"
 	"log"
 	"path"
 	"regexp"
@@ -38,7 +39,7 @@ func NewNewEpubClient(epubConfig *ConfigEpub) *NewEpub {
 	}
 
 	_, _ = newClient.addChapter("书籍信息", bookIntroHtml)
-	NewOpen(newClient.epubConfig.getTextPath(), "w").Write(newClient.epubConfig.getBookIntro())
+	tools.NewOpen(newClient.epubConfig.getTextPath(), "w").Write(newClient.epubConfig.getBookIntro())
 
 	return newClient
 }
@@ -88,7 +89,7 @@ func (epub *NewEpub) SaveChapter(Index int, title, content string) {
 	epub.Lock()
 	defer epub.Unlock()
 	epub.addChapter(title, content)
-	NewOpen(epub.epubConfig.getTextPath(), "a").Write(fmt.Sprintf("\n\n第%d章: %s\n%s", Index, title, content))
+	tools.NewOpen(epub.epubConfig.getTextPath(), "a").Write(fmt.Sprintf("\n\n第%d章: %s\n%s", Index, title, content))
 }
 
 func (epub *NewEpub) Save() error {
